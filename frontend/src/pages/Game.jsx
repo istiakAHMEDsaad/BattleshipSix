@@ -103,7 +103,7 @@ export default function Game() {
           shipName: cell.ship,
         });
         playSound(isHit ? "hit" : "miss");
-        setTurn("user"); // It's now my turn
+        setTurn("user");
         return newBoard;
       });
     });
@@ -169,7 +169,6 @@ export default function Game() {
       availableShips.length === 0
     ) {
       setGameState("playing");
-      // The host attacks first, the joining player waits
       setTurn(isHost ? "user" : "enemy");
     }
   }, [isReady, enemyReady, gameState, availableShips, isHost]);
@@ -234,7 +233,7 @@ export default function Game() {
     }
   }, [isReady, enemyReady, gameState, availableShips]);
 
-  // --- GAMEPLAY LOGIC ---
+  // game logic
   const handleFire = (index) => {
     if (
       gameState !== "playing" ||
@@ -244,8 +243,8 @@ export default function Game() {
       return;
 
     if (mode === "single") {
-      // Fake Bot Logic
-      const isHit = Math.random() > 0.7; // 30% chance bot placed a ship here
+      // fake bot
+      const isHit = Math.random() > 0.7;
       setEnemyBoard((prev) => {
         const newBoard = [...prev];
         newBoard[index] = {
@@ -257,7 +256,7 @@ export default function Game() {
       playSound(isHit ? "hit" : "miss");
       setTurn("enemy");
 
-      // Bot fires back after delay
+      // bot fire after delay
       setTimeout(() => {
         if (gameState === "gameover") return;
         let botTarget;
@@ -276,42 +275,36 @@ export default function Game() {
         });
       }, 1000);
     } else {
-      // Multiplayer logic
-      setTurn("enemy"); // Lock board immediately
+      // multiplayer
+      setTurn("enemy");
       socket.emit("fire", { roomCode: roomId, id: index });
     }
   };
 
-  // --- RENDER HELPERS ---
   const gridStyle = {
     display: "grid",
     gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))`,
     gap: "2px",
-    backgroundColor: "#cbd5e1", // slate-300 gap color
+    backgroundColor: "#cbd5e1",
     border: "2px solid #cbd5e1",
     width: "100%",
     aspectRatio: "1 / 1",
   };
 
   const getCellColor = (cell, isEnemy) => {
-    // animate-pulse for a fresh hit, scale-up for an explosion feel
     if (cell.status === "hit")
       return "bg-red-500 animate-[pulse_0.5s_ease-in-out] scale-95 rounded-sm";
 
-    // soft fade for a miss
     if (cell.status === "miss")
       return "bg-white opacity-80 scale-95 rounded-sm transition-all duration-300";
 
-    // Highlight user ships
     if (!isEnemy && cell.ship) return "bg-slate-800 shadow-inner rounded-sm";
 
-    // Base water styling
     return "bg-blue-400 hover:bg-blue-300 transition-colors duration-200";
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center py-8 px-4 md:px-8">
-      {/* Header Info */}
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-slate-900 mb-1">
           {mode === "single" ? "Offline Mode" : `Room: ${roomId}`}
@@ -335,7 +328,7 @@ export default function Game() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl justify-center items-start">
-        {/* USER BOARD */}
+        {/* user */}
         <div className="flex-1 w-full max-w-md mx-auto">
           <h3 className="text-center font-semibold mb-2">{myName}'s Waters</h3>
           <div style={gridStyle}>
@@ -349,7 +342,7 @@ export default function Game() {
           </div>
         </div>
 
-        {/* ENEMY BOARD */}
+        {/* enemy */}
         <div className="flex-1 w-full max-w-md mx-auto">
           <h3 className="text-center font-semibold mb-2 text-slate-700">
             {opponentName}'s Waters
@@ -373,7 +366,7 @@ export default function Game() {
         </div>
       </div>
 
-      {/* PLACEMENT CONTROLS */}
+      {/* placement */}
       {gameState === "placement" && (
         <div className="mt-8 w-full max-w-2xl bg-white p-6 border border-slate-200 rounded text-center">
           {availableShips.length > 0 ? (
@@ -417,7 +410,6 @@ export default function Game() {
         </div>
       )}
 
-      {/* GAME OVER MODAL */}
       {gameState === "gameover" && (
         <div className="fixed inset-0 bg-slate-900/80 flex items-center justify-center p-4 z-50">
           <div className="bg-white p-8 rounded-lg max-w-sm w-full text-center text-slate-800">
