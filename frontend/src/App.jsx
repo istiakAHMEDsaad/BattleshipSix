@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import Setup from "./pages/Setup";
-// import Game from "./pages/Game";
+import Game from "./pages/Game";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/setup" element={<Setup />} />
-        {/* <Route path="/game/:roomId" element={<Game />} /> */}
+        <Route path="/game/:roomId" element={<Game />} />
       </Routes>
     </div>
   );

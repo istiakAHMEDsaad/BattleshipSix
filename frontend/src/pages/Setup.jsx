@@ -141,28 +141,31 @@ export default function Setup() {
 
         {mode === "multi" && (
           <div className="space-y-8">
-            {/* Waiting Lobby State */}
             {isWaiting ? (
               <div className="text-center p-8 bg-slate-50 rounded-lg border border-slate-200">
                 <p className="text-slate-500 mb-2">Your Room Code</p>
+
                 <h1 className="text-5xl font-mono tracking-widest text-blue-600 font-bold mb-6">
                   {generatedRoomCode}
                 </h1>
+
                 <div className="flex items-center justify-center space-x-2 text-slate-600">
                   <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                   <span>Waiting for opponent to join...</span>
                 </div>
+
                 <p className="text-xs text-slate-400 mt-4">
                   Room expires in 1 hour
                 </p>
               </div>
             ) : (
-              /* Create or Join State */
-              <div className="grid md:grid-cols-2 gap-8 items-end">
-                <div className="space-y-4">
+              // create or join
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+                <div className="space-y-3">
                   <p className="text-sm font-semibold text-slate-700 uppercase">
                     Host a Game
                   </p>
+
                   <button
                     onClick={handleCreateRoom}
                     className="w-full bg-slate-900 text-white font-medium py-3 px-4 rounded hover:bg-slate-800 transition-colors"
@@ -171,7 +174,7 @@ export default function Setup() {
                   </button>
                 </div>
 
-                <div className="space-y-4 relative">
+                <div className="space-y-3 relative">
                   {/* Visual Divider for Desktop */}
                   <div className="hidden md:block absolute -left-4 top-1/2 bottom-0 w-px bg-slate-200"></div>
 

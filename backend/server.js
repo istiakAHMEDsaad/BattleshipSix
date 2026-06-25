@@ -78,8 +78,12 @@ io.on("connection", (socket) => {
     socket.to(roomCode).emit("fire", id);
   });
 
-  socket.on("fire-reply", ({ roomCode, classList }) => {
-    socket.to(roomCode).emit("fire-reply", classList);
+  socket.on("fire-reply", (data) => {
+    socket.to(data.roomCode).emit("fire-reply", data);
+  });
+
+  socket.on("player-ready", ({ roomCode }) => {
+    socket.to(roomCode).emit("enemy-ready");
   });
 
   socket.on("disconnect", () => {
