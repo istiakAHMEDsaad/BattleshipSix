@@ -35,13 +35,13 @@ export default function Game() {
     if (gridSize === 10)
       return [
         ...standardFleet,
-        { id: "submarine-2", name: "submarine", length: 3 },
+        { id: "submarine-2", name: "submarine2", length: 3 },
       ];
 
     return [
       ...standardFleet,
-      { id: "battleship-2", name: "battleship", length: 4 },
-      { id: "destroyer-2", name: "destroyer", length: 2 },
+      { id: "battleship-2", name: "battleship2", length: 4 },
+      { id: "destroyer-2", name: "destroyer2", length: 2 },
     ];
   }, [gridSize]);
 
